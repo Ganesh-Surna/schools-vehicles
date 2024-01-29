@@ -9,22 +9,23 @@ const initialSchoolParameters = {
   country: "",
   state: "",
   address: "",
-  pinCode: "",
+  zipCode: "",
   phoneNumber: "",
 }
 
 const columns = [
-  {field: "Sno", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
-  {field: 'schoolName', filter: false, minWidth: 200 },
-  {field: 'email', filter: false, minWidth: 200},
-  {field: "country.", filter: false, minWidth: 200},
-  {field: "state", filter: false, minWidth: 200},
-  {field: "address", filter: false, minWidth: 200},
-  {field: "pinCode", filter: false, minWidth: 200},
-  {field: "phoneNo.", filter: false, minWidth: 200},
+  {field: "Sno", headerName: "Sno.", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
+  {field: 'schoolName', headerName: "School Name", filter: false, minWidth: 200 },
+  {field: 'email', headerName: "Email", filter: false, minWidth: 200},
+  {field: "country", headerName: "Country", filter: false, minWidth: 200},
+  {field: "state", headerName: "State", filter: false, minWidth: 200},
+  {field: "address", headerName: "Address", filter: false, minWidth: 200},
+  {field: "zipCode", headerName: "Zipcode", filter: false, minWidth: 200},
+  {field: "phoneNumber", headerName: "Phone Number", filter: false, minWidth: 200},
 ]
 
 function Schools() {
+  const [schoolsDataList, setSchoolsDataList] = useState([]);
   const [isAddSchoolModalOpen, setIsAddSchoolModalOpen] = useState(false);
 
   const [schoolParameters, setSchoolParameters] = useState(initialSchoolParameters);
@@ -52,7 +53,7 @@ function Schools() {
     schoolParameters.address.trim() === "" ||
     schoolParameters.country.trim() === "" ||
     schoolParameters.email.trim() === "" ||
-    schoolParameters.pinCode.trim() === "" ||
+    schoolParameters.zipCode.trim() === "" ||
     schoolParameters.state.trim() === "" ||
     schoolParameters.phoneNumber.trim() === ""
   ){
@@ -64,6 +65,7 @@ function Schools() {
 
   function handleAddSchool() {
     console.log("Added school parameters:", schoolParameters);
+    setSchoolsDataList(prev=> [...prev, {Sno: prev.length+1, ...schoolParameters}])
     setSchoolParameters(initialSchoolParameters);
     setIsAddSchoolModalOpen(false);
   }
@@ -167,14 +169,14 @@ function Schools() {
 
             <Col className="gutter-row" span={12}>
               <div className={classes["input-grp"]}>
-                <label htmlFor="pinCode">Pincode</label>
+                <label htmlFor="zipCode">Zipcode</label>
                 <Input
-                  id="pinCode"
-                  name="pinCode"
+                  id="zipCode"
+                  name="zipCode"
                   allowClear
-                  placeholder="Enter pinCode"
-                  value={schoolParameters.pinCode}
-                  onChange={(event) => hanldeInputChange("pinCode", event)}
+                  placeholder="Enter zipCode"
+                  value={schoolParameters.zipCode}
+                  onChange={(event) => hanldeInputChange("zipCode", event)}
                   required
                 />
               </div>
@@ -202,7 +204,7 @@ function Schools() {
       )}
 
       <div className={classes["table-container"]}>
-        <AgGridTable columns={columns} width="100%"/>
+        <AgGridTable rowDataArr={schoolsDataList} columns={columns} width="100%"/>
       </div>
     </main>
   );

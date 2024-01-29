@@ -14,17 +14,20 @@ const initialDriverParameters = {
 }
 
 const columns = [
-  {field: "Sno", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
-  {field: 'firstName', filter: false, minWidth: 200 },
-  {field: 'lastName', filter: false, minWidth: 200},
-  {field: "phoneNumber.", filter: false, minWidth: 200},
-  {field: "description", filter: false, minWidth: 200},
-  {field: "aadhaarNumber", filter: false, minWidth: 200},
+  {field: "Sno", headerName: "Sno.", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
+  {field: 'firstName', headerName: "First Name", filter: false, minWidth: 200 },
+  {field: 'lastName', headerName: "Last Name", filter: false, minWidth: 200},
+  {field: "phoneNumber",headerName: "Phone No.", filter: false, minWidth: 200},
+  {field: "description",headerName: "Description", filter: false, minWidth: 200},
+  {field: "aadhaarNumber",headerName: "Aadhaar No.", filter: false, minWidth: 200},
   // {field: "documents", filter: false, minWidth: 200},
-  {field: "address", filter: false, minWidth: 200},
+  {field: "address",headerName: "Address", filter: false, minWidth: 200},
 ]
 
 function Drivers() {
+
+  const [dirversDataList, setDriversDataList] = useState([]);
+
   const [isAddDriverModalOpen, setIsAddDriverModalOpen] = useState(false);
 
   const [driverParameters, setDriverParameters] = useState(initialDriverParameters);
@@ -64,6 +67,7 @@ function Drivers() {
 
   function handleAddDriver() {
     console.log("Added driver parameters:", driverParameters);
+    setDriversDataList(prev=>[...prev, {Sno: prev.length+1 , ...driverParameters}])
     setDriverParameters(initialDriverParameters);
     setIsAddDriverModalOpen(false);
   }
@@ -187,7 +191,7 @@ function Drivers() {
       )}
 
       <div className={classes["table-container"]}>
-        <AgGridTable columns={columns} width="100%"/>
+        <AgGridTable rowDataArr={dirversDataList} columns={columns} width="100%"/>
       </div>
     </main>
   );

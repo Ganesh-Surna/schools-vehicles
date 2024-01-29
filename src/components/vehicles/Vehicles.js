@@ -12,15 +12,17 @@ const initialVehicleParameters = {
 }
 
 const columns = [
-  {field: "Sno", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
-  {field: 'vehicleName', filter: false, minWidth: 200 },
-  {field: 'vehicleType', filter: false, minWidth: 200},
-  {field: "phoneNo.", filter: false, minWidth: 200},
-  {field: "deviceId", filter: false, minWidth: 200},
-  {field: "area", filter: false, minWidth: 300},
+  {field: "Sno", headerName: "Sno.", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
+  {field: 'vehicleName', headerName: "Vehicle Name", filter: false, minWidth: 200 },
+  {field: 'vehicleType', headerName: "Vehicle Type", filter: false, minWidth: 200},
+  {field: "phoneNumber", headerName: "Phone No.", filter: false, minWidth: 200},
+  {field: "deviceId", headerName: "Device Id", filter: false, minWidth: 200},
+  {field: "area", headerName: "Area", filter: false, minWidth: 300},
 ]
 
 function Vehicles() {
+  const [vehiclesDataList, setVehiclesDataList] = useState([]);
+
   const [isAddVehicleModalOpen, setIsAddVehicleModalOpen] = useState(false);
 
   const [vehicleParameters, setVehicleParameters] = useState(initialVehicleParameters);
@@ -58,6 +60,7 @@ function Vehicles() {
 
   function handleAddVehicle() {
     console.log("Added vehicle parameters:", vehicleParameters);
+    setVehiclesDataList(prev=>[...prev, {Sno: prev.length+1 , ...vehicleParameters}]);
     setVehicleParameters(initialVehicleParameters);
     setIsAddVehicleModalOpen(false);
   }
@@ -165,7 +168,7 @@ function Vehicles() {
       )}
 
       <div className={classes["table-container"]}>
-        <AgGridTable columns={columns} width="100%"/>
+        <AgGridTable rowDataArr={vehiclesDataList} columns={columns} width="100%"/>
       </div>
     </main>
   );

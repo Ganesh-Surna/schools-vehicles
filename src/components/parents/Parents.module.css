@@ -1,0 +1,11 @@
+.menu{
+    display: flex;
+    justify-content: center;
+    /* gap: 2rem; */
+    background-color: transparent;
+    align-items: center;
+}
+
+.tab-content{
+    margin: 1rem 0;
+}

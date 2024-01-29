@@ -1,37 +1,44 @@
-import {
-    NavLink,
-  } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import classes from "./Sidebar.module.css";
 import { motion } from "framer-motion";
 import { uiActions } from "../store/ui-slice";
-import { BiBarChart } from 'react-icons/bi';
 import { FaHistory } from "react-icons/fa";
+import { BiBarChart } from "react-icons/bi";
+import { PiContactlessPaymentFill } from "react-icons/pi";
 import { FaCar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { FiSettings } from "react-icons/fi";
 import { AiOutlineFileText } from "react-icons/ai";
-import { FaSchool,FaLaptopCode } from "react-icons/fa";
+import { FaSchool } from "react-icons/fa";
+import { HiUsers } from "react-icons/hi";
 import { FaPersonBiking } from "react-icons/fa6";
-import { MdGroups } from "react-icons/md";
+import { MdGroups, MdStarRate } from "react-icons/md";
 import { BsFillPersonLinesFill } from "react-icons/bs";
-  
-  export default function Sidebar() {
-    const dispatch = useDispatch();
-  
-    return (
-      <motion.div className={classes.sidebar}>
-        <section
-          className={classes["fields"]}
-          style={{
-            marginTop: "1rem",
-            padding: "0",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexDirection: "column",
-          }}
+import { IoLocation, IoPricetag } from "react-icons/io5"
+
+export default function Sidebar() {
+  const dispatch = useDispatch();
+
+  return (
+    <motion.div key={"sidebar1"} className={classes.sidebar}>
+      <section
+        className={classes["fields"]}
+        style={{
+          marginTop: "1rem",
+          padding: "0",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          flexDirection: "column",
+        }}
+      >
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
         >
-          {<NavLink
+          <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
             to="/"
             className={({ isActive }) => (isActive ? classes.active : "")}
@@ -47,7 +54,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <BiBarChart style={{ padding: "0 1rem 0" , fontSize: 55}} />
+            <BiBarChart style={{ padding: "0 1rem 0", fontSize: 55 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -59,8 +66,15 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
             >
               Dashboard
             </span>
-          </NavLink>}
-  
+          </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
             to="/trips"
@@ -76,7 +90,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <FaHistory style={{ padding: "0 1rem" , fontSize: 55}} />
+            <FaHistory style={{ padding: "0 1rem 0", fontSize: 55 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -89,7 +103,14 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               Trips
             </span>
           </NavLink>
-  
+          </motion.div>
+
+          <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
             to="/vehicles"
@@ -105,7 +126,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <FaCar style={{ padding: "0 1rem" , fontSize: 55}} />
+            <FaCar style={{ padding: "0 1rem", fontSize: 55 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -118,7 +139,14 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               Vehicles
             </span>
           </NavLink>
+          </motion.div>
 
+          <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
             to="/drivers"
@@ -134,7 +162,9 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <BsFillPersonLinesFill style={{ padding: "0 1rem" , fontSize: 55}} />
+            <BsFillPersonLinesFill
+              style={{ padding: "0 1rem", fontSize: 55 }}
+            />
             <span
               style={{
                 fontSize: "20px",
@@ -147,10 +177,197 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               Drivers
             </span>
           </NavLink>
+        </motion.div>
 
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
+        <NavLink
+          onClick={() => dispatch(uiActions.toggleDashboard())}
+          to="/schools"
+          className={({ isActive }) => (isActive ? classes.active : "")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            margin: "0rem 0",
+            padding: "0.05rem 0",
+            width: "100%",
+            borderRadius: "1rem",
+          }}
+        >
+          <FaSchool style={{ padding: "0 1rem", fontSize: 55 }} />
+          <span
+            style={{
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 0 0 0rem",
+            }}
+          >
+            Schools
+          </span>
+        </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
+        <NavLink
+          onClick={() => dispatch(uiActions.toggleDashboard())}
+          to="/location"
+          className={({ isActive }) => (isActive ? classes.active : "")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            margin: "0rem 0",
+            padding: "0.05rem 0",
+            width: "100%",
+            borderRadius: "1rem",
+          }}
+        >
+          <IoLocation style={{ padding: "0 1rem", fontSize: 55 }} />
+          <span
+            style={{
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 0 0 0rem",
+            }}
+          >
+            Location
+          </span>
+        </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
+        <NavLink
+          onClick={() => dispatch(uiActions.toggleDashboard())}
+          to="/users"
+          className={({ isActive }) => (isActive ? classes.active : "")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            margin: "0rem 0",
+            padding: "0.05rem 0",
+            width: "100%",
+            borderRadius: "1rem",
+          }}
+        >
+          <MdGroups style={{ padding: "0 1rem", fontSize: 55 }} />
+          <span
+            style={{
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 0 0 0rem",
+            }}
+          >
+            Users
+          </span>
+        </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
+        <NavLink
+          onClick={() => dispatch(uiActions.toggleDashboard())}
+          to="/parents"
+          className={({ isActive }) => (isActive ? classes.active : "")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            margin: "0rem 0",
+            padding: "0.05rem 0",
+            width: "100%",
+            borderRadius: "1rem",
+          }}
+        >
+          <HiUsers style={{ padding: "0 1rem", fontSize: 55 }} />
+          <span
+            style={{
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 0 0 0rem",
+            }}
+          >
+            Parents
+          </span>
+        </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
+        <NavLink
+          onClick={() => dispatch(uiActions.toggleDashboard())}
+          to="/riders"
+          className={({ isActive }) => (isActive ? classes.active : "")}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            flexDirection: "row",
+            margin: "0rem 0",
+            padding: "0.05rem 0",
+            width: "100%",
+            borderRadius: "1rem",
+          }}
+        >
+          <FaPersonBiking style={{ padding: "0 1rem", fontSize: 55 }} />
+          <span
+            style={{
+              fontSize: "20px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              padding: "0 0 0 0rem",
+            }}
+          >
+            Riders
+          </span>
+        </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
-            to="/schools"
+            to="/fair"
             className={({ isActive }) => (isActive ? classes.active : "")}
             style={{
               display: "flex",
@@ -163,7 +380,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <FaSchool style={{ padding: "0 1rem" , fontSize: 55}} />
+            <IoPricetag style={{ padding: "0 1rem", fontSize: 55 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -173,13 +390,20 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
                 padding: "0 0 0 0rem",
               }}
             >
-              Schools
+              Fair
             </span>
           </NavLink>
+        </motion.div>
 
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
-            to="/promo-code"
+            to="/payments"
             className={({ isActive }) => (isActive ? classes.active : "")}
             style={{
               display: "flex",
@@ -192,7 +416,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <FaLaptopCode style={{ padding: "0 1rem" , fontSize: 55}} />
+            <PiContactlessPaymentFill style={{ padding: "0 1rem", fontSize: 55 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -202,13 +426,20 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
                 padding: "0 0 0 0rem",
               }}
             >
-              Promo Code
+              Payments
             </span>
           </NavLink>
+        </motion.div>
 
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
-            to="/parents"
+            to="/review-and-ratings"
             className={({ isActive }) => (isActive ? classes.active : "")}
             style={{
               display: "flex",
@@ -221,7 +452,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <MdGroups style={{ padding: "0 1rem" , fontSize: 55}} />
+            <MdStarRate style={{ padding: "0 1rem", fontSize: 65 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -231,39 +462,17 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
                 padding: "0 0 0 0rem",
               }}
             >
-              Parents
+              Review & Ratings
             </span>
           </NavLink>
+        </motion.div>
 
-          <NavLink
-            onClick={() => dispatch(uiActions.toggleDashboard())}
-            to="/riders"
-            className={({ isActive }) => (isActive ? classes.active : "")}
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-start",
-              flexDirection: "row",
-              margin: "0rem 0",
-              padding: "0.05rem 0",
-              width: "100%",
-              borderRadius: "1rem",
-            }}
-          >
-            <FaPersonBiking style={{ padding: "0 1rem" , fontSize: 55}} />
-            <span
-              style={{
-                fontSize: "20px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-                padding: "0 0 0 0rem",
-              }}
-            >
-              Riders
-            </span>
-          </NavLink>
-
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => dispatch(uiActions.toggleDashboard())}
             to="/reports"
@@ -279,7 +488,7 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               borderRadius: "1rem",
             }}
           >
-            <AiOutlineFileText style={{ padding: "0 1rem" , fontSize: 55}} />
+            <AiOutlineFileText style={{ padding: "0 1rem", fontSize: 55 }} />
             <span
               style={{
                 fontSize: "20px",
@@ -292,7 +501,14 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               Reports
             </span>
           </NavLink>
-  
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
           <NavLink
             onClick={() => {
               dispatch(uiActions.toggleDashboard());
@@ -323,7 +539,8 @@ import { BsFillPersonLinesFill } from "react-icons/bs";
               Settings
             </span>
           </NavLink>
-          </section>
-      </motion.div>
-    );
-  }
+        </motion.div>
+      </section>
+    </motion.div>
+  );
+}
