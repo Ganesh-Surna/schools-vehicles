@@ -32,11 +32,21 @@ const AgGridTable = ({rowDataArr, width, columns}) => {
     console.log('cellClicked', event);
   }, []);
 
+
+  let height = 180;
+
+  if(rowDataArr.length > 3 && rowDataArr.length <=10){
+    height = 90+rowDataArr.length*40;
+  }
+  else if(rowDataArr.length > 10){
+    height = 90 + 10*40;
+  }
+
   return (
     <div>
 
       {/* On div wrapping Grid a) specify theme CSS Class Class and b) sets Grid size */}
-      <div className="ag-theme-alpine"  style={{width: width, height: 200}}>
+      <div className="ag-theme-alpine"  style={{width: width, height: height}}>
 
         <AgGridReact
             // ref={gridRef} // Ref for accessing Grid's API

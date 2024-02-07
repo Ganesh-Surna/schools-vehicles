@@ -7,6 +7,7 @@ import Logo from "../assets/schoolwheels.png";
 import ChatIcon from "../icons/chat-icon";
 import NotificationIcon from "../icons/notification-icon";
 import ChevronDownIcon from "../icons/chevron-down-icon";
+import { FaUserCircle } from "react-icons/fa";
 
 export default function Header() {
   const dispatch = useDispatch();
@@ -42,13 +43,15 @@ export default function Header() {
               </li>
               <li>
                 <div className={classes["user-image-text"]}>
-                  <img
+                  <FaUserCircle color="rgb(66, 55, 55)" size={30}/>
+                  
+                  {/* <img
                     className={classes.image}
                     src={
                       "https://media.istockphoto.com/id/1090878494/photo/close-up-portrait-of-young-smiling-handsome-man-in-blue-polo-shirt-isolated-on-gray-background.webp?b=1&s=170667a&w=0&k=20&c=c3TaqVe9-0EcHl7mjO-9YChSvGBDhvzUai6obs1Ibz4="
                     }
                     alt="profile"
-                  />
+                  /> */}
                   <p className={classes.para}>
                     Hi, <span className={classes.name}>User</span>
                   </p>

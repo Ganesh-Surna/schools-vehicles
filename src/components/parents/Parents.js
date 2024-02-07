@@ -8,10 +8,6 @@ import ChildrenTab from "./children-tab/ChildrenTab";
 function Parents() {
   const [selectedTab, setSelectedTab] = useState("children");
 
-  const [childrenDataList, setChildrenDataList] = useState([]);
-  const [childrenDataListForIdCardTab, setChildrenDataListForIdCardTab] =
-    useState([]);
-
   const items = [
     {
       key: "children",
@@ -47,35 +43,16 @@ function Parents() {
     console.log("tab key", tab.key);
   }
 
-  function handleAddChildren(childrenParameters) {
-    setChildrenDataList((prev) => [
-      ...prev,
-      { Sno: prev.length + 1, ...childrenParameters },
-    ]);
-    setChildrenDataListForIdCardTab((prev) => [
-      ...prev,
-      {
-        Sno: prev.length + 1,
-        childrenName:
-          childrenParameters.firstName + " " + childrenParameters.lastName,
-        parentName: "Parent",
-        idStatus: "Has id",
-      },
-    ]);
-  }
 
   let content;
 
   if (selectedTab === "children") {
     content = (
-      <ChildrenTab
-        onAddChildren={handleAddChildren}
-        childrenDataList1={childrenDataList}
-      />
+      <ChildrenTab />
     );
   }
   if (selectedTab === "idCard") {
-    content = <IdCardTab childrenDataList={childrenDataListForIdCardTab} />;
+    content = <IdCardTab />;
   }
   if (selectedTab === "qrCode") {
     content = <QrCodeTab />;

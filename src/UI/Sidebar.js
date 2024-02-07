@@ -8,7 +8,7 @@ import { PiContactlessPaymentFill } from "react-icons/pi";
 import { FaCar } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { FiSettings } from "react-icons/fi";
-import { AiOutlineFileText } from "react-icons/ai";
+import { AiOutlineFileText,AiOutlineCheckCircle } from "react-icons/ai";
 import { FaSchool } from "react-icons/fa";
 import { HiUsers } from "react-icons/hi";
 import { FaPersonBiking } from "react-icons/fa6";
@@ -49,7 +49,7 @@ export default function Sidebar() {
               justifyContent: "flex-start",
               flexDirection: "row",
               margin: "0rem 0",
-              padding: "0.05rem 0",
+              padding: "0.005rem 0",
               width: "100%",
               borderRadius: "1rem",
             }}
@@ -85,7 +85,7 @@ export default function Sidebar() {
               justifyContent: "flex-start",
               flexDirection: "row",
               margin: "0rem 0",
-              padding: "0.05rem 0",
+              padding: "0.005rem 0",
               width: "100%",
               borderRadius: "1rem",
             }}
@@ -121,7 +121,7 @@ export default function Sidebar() {
               justifyContent: "flex-start",
               flexDirection: "row",
               margin: "0rem 0",
-              padding: "0.05rem 0",
+              padding: "0.005rem 0",
               width: "100%",
               borderRadius: "1rem",
             }}
@@ -157,7 +157,7 @@ export default function Sidebar() {
               justifyContent: "flex-start",
               flexDirection: "row",
               margin: "0rem 0",
-              padding: "0.05rem 0",
+              padding: "0.005rem 0",
               width: "100%",
               borderRadius: "1rem",
             }}
@@ -195,7 +195,7 @@ export default function Sidebar() {
             justifyContent: "flex-start",
             flexDirection: "row",
             margin: "0rem 0",
-            padding: "0.05rem 0",
+            padding: "0.005rem 0",
             width: "100%",
             borderRadius: "1rem",
           }}
@@ -231,7 +231,7 @@ export default function Sidebar() {
             justifyContent: "flex-start",
             flexDirection: "row",
             margin: "0rem 0",
-            padding: "0.05rem 0",
+            padding: "0.005rem 0",
             width: "100%",
             borderRadius: "1rem",
           }}
@@ -267,7 +267,7 @@ export default function Sidebar() {
             justifyContent: "flex-start",
             flexDirection: "row",
             margin: "0rem 0",
-            padding: "0.05rem 0",
+            padding: "0.005rem 0",
             width: "100%",
             borderRadius: "1rem",
           }}
@@ -303,7 +303,7 @@ export default function Sidebar() {
             justifyContent: "flex-start",
             flexDirection: "row",
             margin: "0rem 0",
-            padding: "0.05rem 0",
+            padding: "0.005rem 0",
             width: "100%",
             borderRadius: "1rem",
           }}
@@ -339,7 +339,7 @@ export default function Sidebar() {
             justifyContent: "flex-start",
             flexDirection: "row",
             margin: "0rem 0",
-            padding: "0.05rem 0",
+            padding: "0.005rem 0",
             width: "100%",
             borderRadius: "1rem",
           }}
@@ -375,7 +375,7 @@ export default function Sidebar() {
               justifyContent: "flex-start",
               flexDirection: "row",
               margin: "0rem 0",
-              padding: "0.05rem 0",
+              padding: "0.005rem 0",
               width: "100%",
               borderRadius: "1rem",
             }}
@@ -463,6 +463,42 @@ export default function Sidebar() {
               }}
             >
               Review & Ratings
+            </span>
+          </NavLink>
+        </motion.div>
+
+        <motion.div
+          className={classes["field"]}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          transition={{ duration: 0.05}}
+        >
+          <NavLink
+            onClick={() => dispatch(uiActions.toggleDashboard())}
+            to="/approvals"
+            className={({ isActive }) => (isActive ? classes.active : "")}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "flex-start",
+              flexDirection: "row",
+              margin: "0rem 0",
+              padding: "0.05rem 0",
+              width: "100%",
+              borderRadius: "1rem",
+            }}
+          >
+            <AiOutlineCheckCircle style={{ padding: "0 1rem", fontSize: 55 }} />
+            <span
+              style={{
+                fontSize: "20px",
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "0 0 0 0rem",
+              }}
+            >
+              Approvals
             </span>
           </NavLink>
         </motion.div>

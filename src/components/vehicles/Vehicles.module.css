@@ -4,6 +4,12 @@
     gap: 1rem;
     align-items: stretch;
 }
+.whole-container Button{
+    font-size: 1rem;
+    height: fit-content;
+    /* padding: 0.35rem 1.5rem; */
+    background-color: rgb(65, 144, 218);
+}
 
 .input-grp{
     display: flex;
@@ -14,8 +20,28 @@
     font-size: 0.75rem;
     font-weight: 700;
     color: rgb(95, 95, 95);
+    color: rgb(29, 28, 28);
+    align-self: flex-start;
     margin-left: 0.25rem;
+    /* font-family:sans-serif; */
     text-transform: uppercase;
+}
+.input-photo-grp{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.35rem;
+    padding-right: 1rem;
+}
+.input-photo-grp Input{
+    outline: none;
+    border:none;
+    box-shadow: none;
+    padding: 0rem;
+    width: 60%;
 }
 .table-container{
     align-self: center;

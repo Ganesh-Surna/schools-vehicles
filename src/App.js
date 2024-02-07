@@ -15,6 +15,9 @@ import Users from './components/users/Users';
 import Payments from './components/payments/Payments';
 import Fair from './components/fair/Fair';
 import ReviewAndRatings from './components/review-and-ratings/ReviewAndRatings';
+import Approvals from './components/approvals/Approvals';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClientObj } from './util/http';
 
 const router = createBrowserRouter([
   {
@@ -36,13 +39,16 @@ const router = createBrowserRouter([
       {path: "reports", element: <Reports/>},
       {path: "settings", element: <Settings/>},
       {path: "location", element: <Location/>},
+      {path: "approvals", element: <Approvals/>},
     ]
   }
 ])
 
 function App() {
   return (
-   <RouterProvider router={router}/>
+    <QueryClientProvider client={queryClientObj}>
+      <RouterProvider router={router}/>
+    </QueryClientProvider>
   );
 }
 

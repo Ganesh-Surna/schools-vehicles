@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import classes from "../../vehicles/Vehicles.module.css"
 import AgGridTable from '../../../UI/AgGridTable'
 import { Button } from 'antd'
 
 
-function IdCardTab({childrenDataList}) {
+function IdCardTab() {
+  const [childrenDataList, setChildrenDataList] = useState([]);
 
   function handleGenerateId(data){
     console.log(data);

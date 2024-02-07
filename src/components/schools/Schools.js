@@ -1,36 +1,136 @@
 import { Button, Col, Input, Modal, Row } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "../vehicles/Vehicles.module.css";
 import AgGridTable from "../../UI/AgGridTable";
+import TextArea from "antd/es/input/TextArea";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { deleteSchoolData, fetchSchoolData, postSchoolData, puttSchoolData, queryClientObj } from "../../util/http";
+import SchoolsFormModal from "./SchoolsFormModal";
 
 const initialSchoolParameters = {
   schoolName: "",
-  email: "",
-  country: "",
+  branch: "",
+  city: "",
   state: "",
-  address: "",
+  coordinates: "",
+  zone: "",
   zipCode: "",
-  phoneNumber: "",
+  address: "",
 }
 
-const columns = [
-  {field: "Sno", headerName: "Sno.", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
-  {field: 'schoolName', headerName: "School Name", filter: false, minWidth: 200 },
-  {field: 'email', headerName: "Email", filter: false, minWidth: 200},
-  {field: "country", headerName: "Country", filter: false, minWidth: 200},
-  {field: "state", headerName: "State", filter: false, minWidth: 200},
-  {field: "address", headerName: "Address", filter: false, minWidth: 200},
-  {field: "zipCode", headerName: "Zipcode", filter: false, minWidth: 200},
-  {field: "phoneNumber", headerName: "Phone Number", filter: false, minWidth: 200},
-]
 
 function Schools() {
   const [schoolsDataList, setSchoolsDataList] = useState([]);
   const [isAddSchoolModalOpen, setIsAddSchoolModalOpen] = useState(false);
-
   const [schoolParameters, setSchoolParameters] = useState(initialSchoolParameters);
-
+  const [isEdit, setIsEdit] = useState(false);
+  const [editingId, setEditingId] = useState(false);
   let isFormValid = false;
+
+  function handleStartUpdateRow(data) {
+    const {
+      id,
+      schoolName,
+      branch,
+      city,
+      state,
+      coordinates,
+      zone,
+      zipCode,
+      address,
+    } = data;
+    console.log(data);
+    setEditingId(id);
+    setSchoolParameters({
+      schoolName,
+      branch,
+      city,
+      state,
+      coordinates,
+      zone,
+      zipCode,
+      address,
+    });
+    setIsEdit(true);
+    setIsAddSchoolModalOpen(true);
+  }
+
+  function handleDeleteRow(data) {
+    const { id } = data;
+    deleteSchoolMutate(id);
+  }
+
+  function handleUpdateSchool(){
+    schoolMutate({SchoolData : schoolParameters, id: editingId});
+  }
+
+  const columns = [
+    {field: "Sno", headerName: "Sno.", filter: false, minWidth: 100, maxWidth: 150, cellStyle: {backgroundColor:"rgba(255,255,255" , textAlign: "center"}},
+    {field: 'schoolName', headerName: "School Name", filter: false, minWidth: 200 },
+    {field: 'branch', headerName: "Branch", filter: false, minWidth: 200},
+    {field: "city", headerName: "City", filter: false, minWidth: 200},
+    {field: "state", headerName: "State", filter: false, minWidth: 200},
+    {field: "zone", headerName: "Zone", filter: false, minWidth: 200},
+    {field: "coordinates", headerName: "Coordinates", filter: false, minWidth: 200},
+    {field: "zipCode", headerName: "Zipcode", filter: false, minWidth: 200},
+    {field: "address", headerName: "Address", filter: false, minWidth: 300},
+    {
+      headerName: "Actions",
+      field: "Sno",
+      filter: false,
+      // minWidth: 300,
+      cellRenderer: (params) => (
+        <div>
+          <Button
+            type="primary"
+            style={{backgroundColor:"green", marginRight: "0.5rem"}}
+            onClick={handleStartUpdateRow.bind(this, params.data)}
+          >
+            Update
+          </Button>
+          <Button
+            type="primary"
+            style={{backgroundColor:"red"}}
+            onClick={handleDeleteRow.bind(this, params.data)}
+          >
+            Delete
+          </Button>
+        </div>
+      ),
+    },
+  ]
+
+  const {mutate: schoolMutate} = useMutation({
+    mutationFn: isEdit ? puttSchoolData : postSchoolData,
+    onSuccess: async()=>{
+      await queryClientObj.invalidateQueries(["school"]);
+      setIsAddSchoolModalOpen(false);
+      setEditingId(null);
+      setIsEdit(false);
+      setSchoolParameters(initialSchoolParameters)
+    }
+  })
+  const {mutate: deleteSchoolMutate} = useMutation({
+    mutationFn: deleteSchoolData,
+    onSuccess: async()=>{
+      await queryClientObj.invalidateQueries(["school"]);
+    }
+  })
+
+  const {data: schoolData} = useQuery({
+    queryKey: ["school"],
+    queryFn: ({signal})=> fetchSchoolData({signal}),
+  })
+
+  useEffect(()=>{
+    if(schoolData){
+      console.log("school data: ", schoolData)
+      const updateSchoolData = schoolData.map((each, index)=>{
+        return {...each, Sno: index+1}
+      })
+      setSchoolsDataList(updateSchoolData);
+    }
+  },[schoolData])
 
   function hanldeInputChange(identifier, event) {
     setSchoolParameters((prev) => ({
@@ -50,12 +150,13 @@ function Schools() {
 
   if (
     schoolParameters.schoolName.trim() === "" ||
-    schoolParameters.address.trim() === "" ||
-    schoolParameters.country.trim() === "" ||
-    schoolParameters.email.trim() === "" ||
+    schoolParameters.coordinates.trim() === "" ||
+    schoolParameters.city.trim() === "" ||
+    schoolParameters.branch.trim() === "" ||
     schoolParameters.zipCode.trim() === "" ||
     schoolParameters.state.trim() === "" ||
-    schoolParameters.phoneNumber.trim() === ""
+    schoolParameters.zone.trim() === "" ||
+    schoolParameters.address.trim() === ""
   ){
     isFormValid= false;
   }
@@ -65,7 +166,8 @@ function Schools() {
 
   function handleAddSchool() {
     console.log("Added school parameters:", schoolParameters);
-    setSchoolsDataList(prev=> [...prev, {Sno: prev.length+1, ...schoolParameters}])
+    schoolMutate(schoolParameters);
+    // setSchoolsDataList(prev=> [...prev, {Sno: prev.length+1, ...schoolParameters}])
     setSchoolParameters(initialSchoolParameters);
     setIsAddSchoolModalOpen(false);
   }
@@ -80,127 +182,16 @@ function Schools() {
         Add School
       </Button>
       {isAddSchoolModalOpen && (
-        <Modal
-          width={"50%"}
-          open={isAddSchoolModalOpen}
-          okText="Add"
-          onOk={handleAddSchool}
-          cancelText="Close"
-          onCancel={handleCloseAddSchoolModal}
-          title="ADD SCHOOL"
-          okButtonProps={{disabled: !isFormValid}}
-          destroyOnClose
-        >
-          <Row gutter={[24, 16]} style={{ paddingTop: "1rem" }}>
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="schoolName">School name</label>
-                <Input
-                  id="schoolName"
-                  name="schoolName"
-                  allowClear
-                  placeholder="Enter school name"
-                  value={schoolParameters.schoolName}
-                  onChange={(event) => hanldeInputChange("schoolName", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="email">Email</label>
-                <Input
-                  id="email"
-                  name="email"
-                  allowClear
-                  placeholder="Enter email"
-                  value={schoolParameters.email}
-                  onChange={(event) => hanldeInputChange("email", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="country">Country</label>
-                <Input
-                  id="country"
-                  name="country"
-                  allowClear
-                  placeholder="Enter country"
-                  value={schoolParameters.country}
-                  onChange={(event) => hanldeInputChange("country", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="state">State</label>
-                <Input
-                  id="state"
-                  name="state"
-                  allowClear
-                  placeholder="Enter state"
-                  value={schoolParameters.state}
-                  onChange={(event) => hanldeInputChange("state", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="address">Address</label>
-                <Input
-                  id="address"
-                  name="address"
-                  allowClear
-                  placeholder="Enter address"
-                  value={schoolParameters.address}
-                  onChange={(event) => hanldeInputChange("address", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="zipCode">Zipcode</label>
-                <Input
-                  id="zipCode"
-                  name="zipCode"
-                  allowClear
-                  placeholder="Enter zipCode"
-                  value={schoolParameters.zipCode}
-                  onChange={(event) => hanldeInputChange("zipCode", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-            <Col className="gutter-row" span={12}>
-              <div className={classes["input-grp"]}>
-                <label htmlFor="phoneNumber">Phone no.</label>
-                <Input
-                  type="number"
-                  maxLength={10}
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  allowClear
-                  placeholder="Enter phone number"
-                  value={schoolParameters.phoneNumber}
-                  onChange={(event) => hanldeInputChange("phoneNumber", event)}
-                  required
-                />
-              </div>
-            </Col>
-
-          </Row>
-        </Modal>
+        <SchoolsFormModal 
+            isAddSchoolModalOpen={isAddSchoolModalOpen}
+            handleAddSchool={handleAddSchool}
+            handleCloseAddSchoolModal={handleCloseAddSchoolModal}
+            schoolParameters={schoolParameters}
+            handleUpdateSchool={handleUpdateSchool}
+            isFormValid={isFormValid}
+            hanldeInputChange={hanldeInputChange}
+            isEdit={isEdit}
+        />
       )}
 
       <div className={classes["table-container"]}>

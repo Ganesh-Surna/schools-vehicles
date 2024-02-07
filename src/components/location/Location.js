@@ -64,7 +64,7 @@ function Location() {
         items={items}
         onSelect={handleSelectTab}
       />
-      {content}
+      <div className={classes["tab-content"]}>{content}</div>
     </div>
   );
 }
